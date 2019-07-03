@@ -1,0 +1,353 @@
+@import "reset";
+@import "variables";
+@import "mixin";
+@import "extend";
+
+html {
+  -webkit-text-size-adjust: none;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: $white;
+  @include font-use($fs3,400);
+  @extend %custom-scrollbar;
+}
+
+.o-btn {
+  display: inline-flex;
+  min-width: 120px;
+  height: 30px;
+  border-radius: $br-1;
+  color: $black;
+  outline: 0;
+  border: 1px solid $color1;
+  padding: 0 14px;
+  font-size: $fs2;
+  cursor: pointer;
+
+  span {
+    margin: auto;
+    font-weight: 600;
+    text-shadow: 0 0 2px $black;
+  }
+
+  &--primary {
+    border: 0;
+    border-radius: $br-1;
+    background: $color4;
+    color: $white;
+
+    &:hover {
+      background: lighten($color: $color4, $amount: 15);
+      transition: $transition-default;
+    }
+
+    &.is-press {
+      background: darken($color: $color4, $amount: 10);
+      color: $color3;
+    }
+  }
+}
+
+.o-event {
+  display: flex;
+  flex-direction: column;
+  color: $color1;
+
+  &__title {
+    font-weight: 600;
+    padding-bottom: 4px;
+  }
+}
+
+.o-tooltip {
+  position: absolute;
+  width: 100%;
+  min-height: 50px;
+  padding: 30px 16px;
+  background: $white;
+  border-radius: $br-1;
+  box-shadow: 0px 0px 6px 1px rgba(0,0,0,0.2);
+  visibility: hidden;
+  opacity: 0;
+  transition: $transition-default;
+
+  &--lg {
+    width: 320px;
+  }
+
+  &_bottom {
+    top: calc(100% + 20px);
+    bottom: auto;
+    left: 0;
+
+    &::after {
+      content: '';
+      @include absolute(-8px,auto,auto,10px);
+      width: 16px;
+      height: 16px;
+      background: $white;
+      transform: rotate(-45deg);
+    }
+  }
+
+  &__close {
+    @include absolute(4px,2px,auto,auto);
+    background: transparent;
+    font-size: $fs4;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+  }
+
+  &__search {
+    margin-bottom: 16px;
+  }
+
+  &__submit {
+    border-radius: $br-1;
+    background: $white;
+    border: 1px solid $color1;
+    font-size: $fs2;
+    padding: 4px 8px;
+    cursor: pointer;
+
+    &:hover {
+      background: $color3;
+      transition: $transition-default;
+    }
+  }
+}
+
+.l-container {
+  width: 100%;
+  max-width: 1280px;
+  padding: 0 20px;
+  margin: 0 auto;
+  box-sizing: border-box;
+
+  &--header {
+    display: flex;
+    align-items: flex-end;
+
+    @include phones-landscape {
+      flex-direction: column;
+    }
+  }
+}
+
+.c-calend {
+  width: 100%;
+
+  &-header {
+    display: flex;
+    align-items: flex-end;
+    min-height: 100px;
+    background: $color3;
+    padding: 20px 0;
+    box-sizing: border-box;
+    box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.3);
+
+    &__btn {
+      position: relative;
+      display: inline-flex;
+      margin-right: 10px;
+
+      @include phones-landscape {
+        margin: 0;
+      }
+
+      &-wrap {
+        @include phones-landscape {
+          width: 100%;
+          display: flex;
+          justify-content: space-around;
+        }
+      }
+
+      &.is-tooltip {
+        .o-tooltip {
+          visibility: visible;
+          opacity: 1;
+        }
+      }
+    }
+
+    &__search {
+      width: 100%;
+      max-width: 200px;
+      margin: auto 0 0 auto;
+
+      input {
+        border-top: 1px solid $color3;
+        border-bottom: 1px solid $color3;
+      }
+
+      @include phones-landscape {
+        margin: 14px auto auto;
+      }
+    }
+  }
+
+  &__main {
+    margin-bottom: 30px;
+  }
+
+  &__date {
+    display: flex;
+    padding: 20px 0;
+
+    &-btn {
+      display: inline-flex;
+      align-items: center;
+      line-height: 16px;
+      width: 18px;
+      height: 18px;
+      border: 0;
+      outline: 0;
+      border-radius: $br-1;
+      background: transparent;
+      box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.3);
+      cursor: pointer;
+    }
+
+    &-title {
+      font-size: $fs5;
+      padding: 0 8px;
+    }
+
+    &-current {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      height: 18px;
+      box-shadow: inset 0px 0px 5px 0px rgba(0,0,0,0.3);
+      padding: 0 6px;
+      font-size: $fs2;
+      border-radius: $br-1;
+      margin-left: 10px;
+      color: $color1;
+    }
+  }
+
+  &-block {
+    width: calc(100%/7);
+    height: 120px;
+    padding: 8px;
+    font-size: $fs2;
+    color: $color2;
+    border-right: 1px solid $color3;
+    border-bottom: 1px solid $color3;
+    box-sizing: border-box;
+    cursor: pointer;
+    overflow-x: hidden;
+
+    &:nth-child(-n+7) {
+      height: 130px;
+    }
+
+    &:hover {
+      background: $color5;
+    }
+
+    &__wrap {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      border-top: 1px solid $color3;
+      border-left: 1px solid $color3;
+      box-sizing: border-box;
+    }
+
+    &__date {
+      padding-bottom: 4px;
+    }
+
+    &_current {
+      background: $color3;
+      color: $color1;
+
+      .c-calend-block__date {
+        span {
+          font-weight: 600;
+        }
+      }
+    }
+
+    &_bind {
+      background: $color5;
+    }
+  }
+}
+
+.c-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &.is-tooltip {
+    .o-tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  input {
+    outline: 0;
+    border: 0;
+    border-radius: $br-1;
+    width: 100%;
+    height: 30px;
+    box-sizing: border-box;
+    box-shadow: inset 0px 0px 3px 0px rgba(0,0,0,0.4);
+    outline: none;
+    font-size: $fs2;
+    padding: 0 8px;
+
+    @include input-placeholder {
+      color: $color2;
+    }
+
+    &:focus {
+      box-shadow: inset 0px 0px 3px 0px rgba(0,111,202,0.8);
+      transition: $transition-default;
+    }
+  }
+
+  &--icon {
+    &::before {
+      content: '';
+      @include absolute(0,auto,0,-28px);
+      width: 16px;
+      height: 16px;
+      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAMsSURBVHgBxZjbddpAEIYH2e+hA6sE3IH86OMbrgBcQUgFhg5IBSYVQOBweLRSQUgHSgf4lWv+nyxmWRa0K3H5z9FBjLSrT7OzuzMqiKPa7XZ4eXn5hNMIRwlHUR1UwmOxWAwLhcLPh4eHWA6kQtoNvV4vws+rAnMSQJMgCOr39/c/JKd2Ag4Gg3A6nb75gJkiKDz6ksejVkDltbashzCvGoCsSwZtAXa73Sre+m3H/TGODoavc3d393dlRHyWYLu6uLgow2tlsbwY7M3Hx8dvkgcQcGXAtcUOVoMX/kiKVGhUcFq3XPb2ZMHo+B2noXEPwb6Lp3b1BwdUfSZPsDqZzWavts6ywFG3t7cJlqUb+b8EfYpDjZBwju0lIOMODavGtVreZUKDHGnmImxfXftYAsJTFd0I2FZWz9kg0X/DMNdcvRgwVsRY6zDcDTmgMBJN2RxqerHi0jZAID8Ztvj5+TmRw6tp/C+7NOIQR7oBw9GSIwiOMOO55NKOgKFumEwmqWtdFmFUOFESzVTs9/tXae0IWDI6GsrxlOh/EOthWoNATiiETyKeOikglq9QPEXARDe4xEUObax9GOKPtAZbgJhtTrPLV2ph9o73gGm6bkCcRHIEMRUzTE6TMWANoRuYIPhs5q6ybKexS7tApeOZN3MXqQw90m2IP6e9fjWLzW2ojslykFhUo7GRoTMZcd1Ol4CYGHybjQZ4wzZLTckpjAbhQqNv52RkCai2oRf9AmImRGC/Z4Wk55BntmQ7KYjFQ58LtYrFun6RkPDAbzyoJh5izLGdOTGUIr64awjZqrqWreNVMY5k4pctfugxQPGhrkX+CP3doDocegFS8AAfUt/Tjp2OZD37CRaKv1Ihd35ZUPXxViGVQXz4vuHcC7kzWUCR3WLBkyOBjfHga6wQZtFkqjifz3fGZOrHI4p1C2IvUrG5+rJlhVJHRy/y+XBCyP5PKVZPOgGa4qcOzMQvq/84T8bj8YdarqzKCpkJMKuyQJ4UkPKFPDkg5QN5FkDKETI+GyDlAnlWQGof5HJ7lTOLE4GxJpbFnJvE2QEpQmLXupZ1KkZYfjht') center no-repeat;
+      background-size: contain;
+      margin-right: 8px;
+    }
+  }
+
+  &__list {
+    height: 305px;
+    overflow-y: scroll;
+    @extend %custom-scrollbar;
+  }
+
+  &__item {
+    width: 100%;
+    border-bottom: 1px solid $color3;
+    padding: 8px 0;
+
+    &-title {
+      color: $black;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    &-date {
+      font-size: $fs2;
+      color: $color2;
+    }
+  }
+}
