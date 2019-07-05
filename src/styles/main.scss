@@ -62,6 +62,44 @@ body {
   }
 }
 
+.o-input {
+  input {
+    outline: 0;
+    border: 0;
+    border-radius: $br-1;
+    width: 100%;
+    height: 30px;
+    box-sizing: border-box;
+    box-shadow: inset 0px 0px 3px 0px rgba(0,0,0,0.4);
+    font-size: $fs2;
+    padding: 0 8px;
+
+    @include input-placeholder {
+      color: $color2;
+    }
+
+    &:focus {
+      box-shadow: inset 0px 0px 3px 0px rgba(0,111,202,0.8);
+      transition: $transition-default;
+    }
+  }
+
+  textarea {
+    @extend input;
+    padding: 8px;
+    height: 100px;
+    resize: none;
+  }
+
+  &--add-event {
+    margin-bottom: 8px;
+
+    textarea {
+      margin: 20px 0 10px;
+    }
+  }
+}
+
 .o-tooltip {
   position: absolute;
   width: 100%;
@@ -73,6 +111,7 @@ body {
   visibility: hidden;
   opacity: 0;
   transition: $transition-default;
+  z-index: 10;
 
   &--lg {
     width: 320px;
@@ -86,6 +125,21 @@ body {
     &::after {
       content: '';
       @include absolute(-8px,auto,auto,10px);
+      width: 16px;
+      height: 16px;
+      background: $white;
+      transform: rotate(-45deg);
+    }
+  }
+
+  &_right {
+    left: calc(100% + 20px);
+    right: auto;
+    top: 0;
+
+    &::after {
+      content: '';
+      @include absolute(10px,auto,auto,-8px);
       width: 16px;
       height: 16px;
       background: $white;
@@ -113,6 +167,7 @@ body {
     font-size: $fs2;
     padding: 4px 8px;
     cursor: pointer;
+    margin-right: 8px;
 
     &:hover {
       background: $color3;
@@ -233,6 +288,7 @@ body {
   }
 
   &-block {
+    position: relative;
     width: calc(100%/7);
     height: 120px;
     padding: 8px;
@@ -242,7 +298,6 @@ body {
     border-bottom: 1px solid $color3;
     box-sizing: border-box;
     cursor: pointer;
-    overflow-x: hidden;
 
     &:nth-child(-n+7) {
       height: 130px;
@@ -279,6 +334,13 @@ body {
     &_bind {
       background: $color5;
     }
+
+    &.is-tooltip {
+      .o-tooltip {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
   }
 }
 
@@ -294,38 +356,14 @@ body {
     }
   }
 
-  input {
-    outline: 0;
-    border: 0;
-    border-radius: $br-1;
-    width: 100%;
-    height: 30px;
-    box-sizing: border-box;
-    box-shadow: inset 0px 0px 3px 0px rgba(0,0,0,0.4);
-    outline: none;
-    font-size: $fs2;
-    padding: 0 8px;
-
-    @include input-placeholder {
-      color: $color2;
-    }
-
-    &:focus {
-      box-shadow: inset 0px 0px 3px 0px rgba(0,111,202,0.8);
-      transition: $transition-default;
-    }
-  }
-
-  &--icon {
-    &::before {
-      content: '';
-      @include absolute(0,auto,0,-28px);
-      width: 16px;
-      height: 16px;
-      background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAMsSURBVHgBxZjbddpAEIYH2e+hA6sE3IH86OMbrgBcQUgFhg5IBSYVQOBweLRSQUgHSgf4lWv+nyxmWRa0K3H5z9FBjLSrT7OzuzMqiKPa7XZ4eXn5hNMIRwlHUR1UwmOxWAwLhcLPh4eHWA6kQtoNvV4vws+rAnMSQJMgCOr39/c/JKd2Ag4Gg3A6nb75gJkiKDz6ksejVkDltbashzCvGoCsSwZtAXa73Sre+m3H/TGODoavc3d393dlRHyWYLu6uLgow2tlsbwY7M3Hx8dvkgcQcGXAtcUOVoMX/kiKVGhUcFq3XPb2ZMHo+B2noXEPwb6Lp3b1BwdUfSZPsDqZzWavts6ywFG3t7cJlqUb+b8EfYpDjZBwju0lIOMODavGtVreZUKDHGnmImxfXftYAsJTFd0I2FZWz9kg0X/DMNdcvRgwVsRY6zDcDTmgMBJN2RxqerHi0jZAID8Ztvj5+TmRw6tp/C+7NOIQR7oBw9GSIwiOMOO55NKOgKFumEwmqWtdFmFUOFESzVTs9/tXae0IWDI6GsrxlOh/EOthWoNATiiETyKeOikglq9QPEXARDe4xEUObax9GOKPtAZbgJhtTrPLV2ph9o73gGm6bkCcRHIEMRUzTE6TMWANoRuYIPhs5q6ybKexS7tApeOZN3MXqQw90m2IP6e9fjWLzW2ojslykFhUo7GRoTMZcd1Ol4CYGHybjQZ4wzZLTckpjAbhQqNv52RkCai2oRf9AmImRGC/Z4Wk55BntmQ7KYjFQ58LtYrFun6RkPDAbzyoJh5izLGdOTGUIr64awjZqrqWreNVMY5k4pctfugxQPGhrkX+CP3doDocegFS8AAfUt/Tjp2OZD37CRaKv1Ihd35ZUPXxViGVQXz4vuHcC7kzWUCR3WLBkyOBjfHga6wQZtFkqjifz3fGZOrHI4p1C2IvUrG5+rJlhVJHRy/y+XBCyP5PKVZPOgGa4qcOzMQvq/84T8bj8YdarqzKCpkJMKuyQJ4UkPKFPDkg5QN5FkDKETI+GyDlAnlWQGof5HJ7lTOLE4GxJpbFnJvE2QEpQmLXupZ1KkZYfjht') center no-repeat;
-      background-size: contain;
-      margin-right: 8px;
-    }
+  &::before {
+    content: '';
+    @include absolute(0,auto,0,-28px);
+    width: 16px;
+    height: 16px;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAMsSURBVHgBxZjbddpAEIYH2e+hA6sE3IH86OMbrgBcQUgFhg5IBSYVQOBweLRSQUgHSgf4lWv+nyxmWRa0K3H5z9FBjLSrT7OzuzMqiKPa7XZ4eXn5hNMIRwlHUR1UwmOxWAwLhcLPh4eHWA6kQtoNvV4vws+rAnMSQJMgCOr39/c/JKd2Ag4Gg3A6nb75gJkiKDz6ksejVkDltbashzCvGoCsSwZtAXa73Sre+m3H/TGODoavc3d393dlRHyWYLu6uLgow2tlsbwY7M3Hx8dvkgcQcGXAtcUOVoMX/kiKVGhUcFq3XPb2ZMHo+B2noXEPwb6Lp3b1BwdUfSZPsDqZzWavts6ywFG3t7cJlqUb+b8EfYpDjZBwju0lIOMODavGtVreZUKDHGnmImxfXftYAsJTFd0I2FZWz9kg0X/DMNdcvRgwVsRY6zDcDTmgMBJN2RxqerHi0jZAID8Ztvj5+TmRw6tp/C+7NOIQR7oBw9GSIwiOMOO55NKOgKFumEwmqWtdFmFUOFESzVTs9/tXae0IWDI6GsrxlOh/EOthWoNATiiETyKeOikglq9QPEXARDe4xEUObax9GOKPtAZbgJhtTrPLV2ph9o73gGm6bkCcRHIEMRUzTE6TMWANoRuYIPhs5q6ybKexS7tApeOZN3MXqQw90m2IP6e9fjWLzW2ojslykFhUo7GRoTMZcd1Ol4CYGHybjQZ4wzZLTckpjAbhQqNv52RkCai2oRf9AmImRGC/Z4Wk55BntmQ7KYjFQ58LtYrFun6RkPDAbzyoJh5izLGdOTGUIr64awjZqrqWreNVMY5k4pctfugxQPGhrkX+CP3doDocegFS8AAfUt/Tjp2OZD37CRaKv1Ihd35ZUPXxViGVQXz4vuHcC7kzWUCR3WLBkyOBjfHga6wQZtFkqjifz3fGZOrHI4p1C2IvUrG5+rJlhVJHRy/y+XBCyP5PKVZPOgGa4qcOzMQvq/84T8bj8YdarqzKCpkJMKuyQJ4UkPKFPDkg5QN5FkDKETI+GyDlAnlWQGof5HJ7lTOLE4GxJpbFnJvE2QEpQmLXupZ1KkZYfjht') center no-repeat;
+    background-size: contain;
+    margin-right: 8px;
   }
 
   &__list {

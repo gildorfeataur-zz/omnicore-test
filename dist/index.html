@@ -18,7 +18,7 @@
                 <button type="button" class="o-btn o-btn--primary js-add-event-global"><span>Добавить</span></button>
                 <div class="o-tooltip o-tooltip--lg o-tooltip_bottom">
                   <button type="button" class="o-tooltip__close">&#215;</button>
-                  <div class="c-search o-tooltip__search">
+                  <div class="o-input c-search o-tooltip__search">
                     <input type="text" placeholder="15 мартаб 14:00, День рождения">
                   </div>
                   <button type="submit" class="o-tooltip__submit">Создать</button>
@@ -29,7 +29,7 @@
               </div>
             </div>
 
-            <div class="c-search c-search--icon c-calend-header__search">
+            <div class="o-input c-search c-calend-header__search">
               <input type="text" class="js-event-search" placeholder="Событие, дата или участник">
               <div class="o-tooltip o-tooltip--search o-tooltip_bottom">
                 <div class="c-search__list">
@@ -150,10 +150,27 @@
                 </p>
               </div>
 
-              <div class="c-calend-block">
+              <div class="c-calend-block is-tooltip">
                 <p class="c-calend-block__date">
                   <span>6</span>
                 </p>
+                <div class="o-tooltip o-tooltip--lg o-tooltip_right">
+                  <button type="button" class="o-tooltip__close">&#215;</button>
+                  <div class="o-input o-input--add-event">
+                    <input type="text" placeholder="Событие">
+                  </div>
+                  <div class="o-input o-input--add-event">
+                    <input type="text" placeholder="День, месяц, год">
+                  </div>
+                  <div class="o-input o-input--add-event">
+                    <input type="text" placeholder="Имена участников">
+                  </div>
+                  <div class="o-input o-input--add-event">
+                    <textarea name="" id="" placeholder="Описание"></textarea>
+                  </div>
+                  <button type="submit" class="o-tooltip__submit">Готово</button>
+                  <button type="button" class="o-tooltip__submit">Удалить</button>
+                </div>
               </div>
 
               <div class="c-calend-block">
